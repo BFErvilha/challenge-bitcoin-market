@@ -1,0 +1,35 @@
+@import '_variables.scss';
+
+.container{
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btn {
+  height: 38px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: .0269rem;
+  line-height: 1.375rem;
+  max-width: 100%;;
+  text-decoration: none;
+  text-indent: .0269rem;
+  text-transform: capitalize;
+  vertical-align: middle;
+  border: none;
+
+  &.btn-orange{
+    background-color: $orange;
+    color: #fff;
+    border: 1px solid $orange;
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
