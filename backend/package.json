@@ -1,0 +1,16 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "Backend - Challenge Bitcoin Market",
+	"main": "src/server.js",
+	"scripts": {
+		"dev": "nodemon src/server.js"
+	},
+	"dependencies": {
+		"express": "^4.19.2",
+		"vite": "^5.3.4"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
+}
