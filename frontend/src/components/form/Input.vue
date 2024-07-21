@@ -77,7 +77,7 @@ watch(inputValue, newValue => {
 
 <style lang="scss" scoped>
 .form-group {
-	margin-bottom: 1rem;
+	margin-bottom: 1.3rem;
 
 	label {
 		display: block;
@@ -86,7 +86,8 @@ watch(inputValue, newValue => {
 	}
 
 	input {
-		width: 100%;
+		width: 96%;
+		max-width: 500px;
 		padding: 0.5rem;
 		border: 1px solid #ccc;
 		border-radius: 4px;

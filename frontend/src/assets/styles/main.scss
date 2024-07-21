@@ -28,8 +28,21 @@
     color: #fff;
     border: 1px solid $orange;
   }
+
+  &.btn-orange-outline{
+      background-color: #fff;
+      color: $orange ;
+      border: 1px solid $orange;
+  }
 }
 
 .w-100 {
   width: 100%;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
