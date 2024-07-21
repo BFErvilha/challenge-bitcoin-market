@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<FInput v-model="localFormData.companyName" type="text" placeholder="Digite a razão social" label="Razão Social" required />
-		<FInput v-model="localFormData.cnpj" type="text" placeholder="Digite o cnpj" label="CNPJ" required />
-		<FInput v-model="localFormData.openingDate" type="date" label="Data de Abertura" required />
-		<FInput v-model="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required />
+		<FInput v-model:value="localFormData.companyName" type="text" placeholder="Digite o nome da empresa" label="Nome da Empresa" required @input="handleInputChange('companyName', $event)" />
+		<FInput v-model:value="localFormData.cnpj" type="text" placeholder="Digite o CNPJ" label="CNPJ" required @input="handleInputChange('cnpj', $event)" />
+		<FInput v-model:value="localFormData.openingDate" type="date" label="Data de Abertura" required @input="handleInputChange('openingDate', $event)" />
+		<FInput v-model:value="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
 	</div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive, watch, computed } from 'vue'
+import { reactive, watch, toRefs } from 'vue'
 import FInput from '@/components/form/Input.vue'
 
 const props = defineProps({
@@ -17,23 +17,20 @@ const props = defineProps({
 
 const emit = defineEmits(['update:formData'])
 
-const formData = computed(() => props.formData)
+const { formData } = toRefs(props)
 const localFormData = reactive({ ...formData.value })
+const sendData = reactive({})
 
 watch(
-	localFormData,
+	formData,
 	newVal => {
-		emit('update:formData', newVal)
-	},
-	{ deep: true },
-)
-
-watch(
-	() => props.formData,
-	newVal => {
-		console.log(newVal)
 		Object.assign(localFormData, newVal)
 	},
-	{ deep: true },
+	{ deep: true, immediate: true },
 )
+
+const handleInputChange = (field, event) => {
+	sendData[field] = event.target.value
+	emit('update:formData', { ...sendData })
+}
 </script>

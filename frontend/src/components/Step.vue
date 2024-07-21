@@ -1,5 +1,5 @@
 <template>
-	<div class="step" v-show="isVisible">
+	<div class="step" v-show="isVisible" :key="stepNumber">
 		<span class="count">
 			Etapa <span>{{ stepNumber }}</span> de 4
 		</span>
@@ -9,7 +9,7 @@
 		</div>
 		<div class="actions">
 			<button v-if="showPrev" class="btn btn-orange-outline w-100" @click="$emit('prev')">Voltar</button>
-			<button v-if="showNext" class="btn btn-orange w-100" @click="$emit('next')">Continuar</button>
+			<button v-if="showNext" class="btn btn-orange w-100" @click="$emit('next')">{{ stepNumber === 4 ? 'Cadastrar' : 'Continuar' }}</button>
 		</div>
 	</div>
 </template>

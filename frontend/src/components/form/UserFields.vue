@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<FInput v-model="localFormData.name" type="text" placeholder="Digite seu nome completo" label="Nome Completo" required />
-		<FInput v-model="localFormData.cpf" type="text" placeholder="Digite seu cpf" label="CPF" required />
-		<FInput v-model="localFormData.birthDate" type="date" label="Data de Nascimento" required />
-		<FInput v-model="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required />
+		<FInput v-model:value="localFormData.name" type="text" placeholder="Digite seu nome completo" label="Nome Completo" required @input="handleInputChange('name', $event)" />
+		<FInput v-model:value="localFormData.cpf" type="text" placeholder="Digite seu cpf" label="CPF" required @input="handleInputChange('cpf', $event)" />
+		<FInput v-model:value="localFormData.birthDate" type="date" label="Data de Nascimento" required @input="handleInputChange('birthDate', $event)" />
+		<FInput v-model:value="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
 	</div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive, watch, computed } from 'vue'
+import { ref, watch, toRefs, reactive } from 'vue'
 import FInput from '@/components/form/Input.vue'
 
 const props = defineProps({
@@ -17,22 +17,20 @@ const props = defineProps({
 
 const emit = defineEmits(['update:formData'])
 
-const formData = computed(() => props.formData)
+const { formData } = toRefs(props)
 const localFormData = reactive({ ...formData.value })
+const sendData = reactive({})
 
 watch(
-	localFormData,
-	newVal => {
-		emit('update:formData', newVal)
-	},
-	{ deep: true },
-)
-
-watch(
-	() => props.formData,
+	formData,
 	newVal => {
 		Object.assign(localFormData, newVal)
 	},
-	{ deep: true },
+	{ deep: true, immediate: true },
 )
+
+const handleInputChange = (field, event) => {
+	sendData[field] = event.target.value
+	emit('update:formData', { ...sendData })
+}
 </script>

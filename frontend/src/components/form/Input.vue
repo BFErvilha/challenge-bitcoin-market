@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
 	value: [String, Number],
@@ -28,6 +28,19 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'validation'])
 
 const inputValue = ref(props.value)
+
+watch(inputValue, newValue => {
+	emit('update:modelValue', newValue)
+	validate()
+})
+
+watch(
+	() => props.value,
+	newValue => {
+		inputValue.value = newValue
+	},
+)
+
 const error = ref(null)
 
 const validate = () => {
@@ -68,14 +81,9 @@ const isValidCNPJ = cnpj => {
 	const re = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/
 	return re.test(cnpj)
 }
-
-watch(inputValue, newValue => {
-	emit('update:modelValue', newValue)
-	validate()
-})
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .form-group {
 	margin-bottom: 1.3rem;
 

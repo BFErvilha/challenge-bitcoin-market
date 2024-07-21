@@ -6,7 +6,7 @@
 				<FRadioButton v-model="formData.userType" :userType="userTypeOptions" />
 			</Step>
 
-			<Step :isVisible="currentStep === 2" :stepNumber="2" :title="formData.userType === 'PF' ? 'Pessoa Física' : 'Pessoa Juridica'" :showPrev="true" :showNext="true" @prev="prevStep" @next="nextStep">
+			<Step :isVisible="currentStep === 2" :stepNumber="2" :title="stepTitle" :showPrev="true" :showNext="true" @prev="prevStep" @next="nextStep">
 				<template v-if="isPF">
 					<UserFields :formData="formData" @update:formData="updateFormData" />
 				</template>
@@ -19,15 +19,15 @@
 				<FInput v-model="formData.password" type="password" placeholder="Digite sua senha" label="Sua senha" required />
 			</Step>
 
-			<Step :isVisible="currentStep === 4" :stepNumber="4" title="Revise suas informações" :showPrev="true" :showNext="true" @prev="prevStep" @next="nextStep">
-				<FInput v-model="formData.email" type="email" placeholder="Digite aqui seu e-mail" label="Endereço de e-mail" required />
+			<Step :isVisible="currentStep === 4" :stepNumber="4" title="Revise suas informações" :showPrev="true" :showNext="true" @prev="prevStep" @next="handleSubmit">
+				<FInput v-model:value="formData.email" type="email" placeholder="Digite aqui seu e-mail" label="Endereço de e-mail" required />
 				<template v-if="isPF">
 					<UserFields :formData="formData" @update:formData="updateFormData" />
 				</template>
 				<template v-if="isPJ">
 					<CompanyFields :formData="formData" @update:formData="updateFormData" />
 				</template>
-				<FInput v-model="formData.password" type="password" placeholder="Digite sua senha" label="Sua senha" required />
+				<FInput v-model:value="formData.password" type="password" placeholder="Digite sua senha" label="Sua senha" required />
 			</Step>
 		</div>
 	</div>
@@ -36,10 +36,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import Step from '@/components/Step.vue'
-import UserFields from '@/components/form/UserFields.vue'
-import CompanyFields from '@/components/form/CompanyFields.vue'
 import FInput from '@/components/form/Input.vue'
 import FRadioButton from '@/components/form/RadioButton.vue'
+import UserFields from '@/components/form/UserFields.vue'
+import CompanyFields from '@/components/form/CompanyFields.vue'
 
 const currentStep = ref(1)
 const formData = ref({
@@ -57,7 +57,7 @@ const formData = ref({
 
 const userTypeOptions = ref([
 	{ label: 'Pessoa Física', value: 'PF' },
-	{ label: 'Pessoa Juridica', value: 'PJ' },
+	{ label: 'Pessoa Jurídica', value: 'PJ' },
 ])
 
 const nextStep = () => {
@@ -69,7 +69,17 @@ const prevStep = () => {
 }
 
 const handleSubmit = async () => {
-	const userData = formData.value
+	let userData = { ...formData.value }
+
+	if (formData.value.userType === 'PF') {
+		delete userData.companyName
+		delete userData.cnpj
+		delete userData.openingDate
+	} else if (formData.value.userType === 'PJ') {
+		delete userData.name
+		delete userData.cpf
+		delete userData.birthDate
+	}
 
 	const response = await fetch('/api/registration', {
 		method: 'POST',
@@ -83,18 +93,14 @@ const handleSubmit = async () => {
 	console.log(result)
 }
 
+const updateFormData = newData => {
+	formData.value = { ...formData.value, ...newData }
+	console.log(formData.value)
+}
+
 const isPF = computed(() => formData.value.userType === 'PF')
 const isPJ = computed(() => formData.value.userType === 'PJ')
-
-const updateFormData = newData => {
-	if (formData.value.userType === 'PF') {
-		const { name, cpf, birthDate, phone } = newData
-		Object.assign(formData.value, { name, cpf, birthDate, phone })
-	} else if (formData.value.userType === 'PJ') {
-		const { phone, companyName, cnpj, openingDate } = newData
-		Object.assign(formData.value, { phone, companyName, cnpj, openingDate })
-	}
-}
+const stepTitle = computed(() => (formData.value.userType === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'))
 </script>
 
 <style scoped lang="scss">
