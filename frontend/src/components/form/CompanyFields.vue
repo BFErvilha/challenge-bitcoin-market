@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<FInput v-model:value="localFormData.companyName" type="text" placeholder="Digite o nome da empresa" label="Nome da Empresa" required @input="handleInputChange('companyName', $event)" />
-		<FInput v-model:value="localFormData.cnpj" type="text" placeholder="Digite o CNPJ" label="CNPJ" required @input="handleInputChange('cnpj', $event)" />
+		<FInput v-model:value="localFormData.cnpj" type="text" id="cnpj" placeholder="Digite o CNPJ" label="CNPJ" required @input="handleInputChange('cnpj', $event)" />
 		<FInput v-model:value="localFormData.openingDate" type="date" label="Data de Abertura" required @input="handleInputChange('openingDate', $event)" />
-		<FInput v-model:value="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
+		<FInput v-model:value="localFormData.phone" type="text" id="phone" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
 	</div>
 </template>
 

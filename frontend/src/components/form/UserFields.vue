@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<FInput v-model:value="localFormData.name" type="text" placeholder="Digite seu nome completo" label="Nome Completo" required @input="handleInputChange('name', $event)" />
-		<FInput v-model:value="localFormData.cpf" type="text" placeholder="Digite seu cpf" label="CPF" required @input="handleInputChange('cpf', $event)" />
+		<FInput v-model:value="localFormData.name" type="text" id="name" placeholder="Digite seu nome completo" label="Nome Completo" required @input="handleInputChange('name', $event)" />
+		<FInput v-model:value="localFormData.cpf" type="text" id="cpf" placeholder="Digite seu cpf" label="CPF" required @input="handleInputChange('cpf', $event)" />
 		<FInput v-model:value="localFormData.birthDate" type="date" label="Data de Nascimento" required @input="handleInputChange('birthDate', $event)" />
-		<FInput v-model:value="localFormData.phone" type="text" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
+		<FInput v-model:value="localFormData.phone" type="text" id="phone" placeholder="(##) #####-####" label="Telefone" required @input="handleInputChange('phone', $event)" />
 	</div>
 </template>
 
