@@ -9,7 +9,7 @@ Criar uma aplicação cliente (browser) de cadastro de usuários que envia os da
 ### Frontend
 
 -   **Framework:** VueJS 3 (via Composition API com `<script setup>` + Vite)
--   **Linguagem:** Javascript Vanilla
+-   **Linguagem:** Javascript
 -   **HTTP Requests:** Fetch nativo
 -   **Estilo:** SCSS
 
@@ -29,10 +29,12 @@ O projeto está organizado em duas pastas principais:
 ### Frontend
 
 1. Navegue para a pasta `frontend`:
+
     ```bash
     cd ../frontend
 
     ```
+
 2. Instale as dependências:
 
     ```bash
