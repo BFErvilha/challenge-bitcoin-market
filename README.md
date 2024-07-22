@@ -6,6 +6,8 @@ Criar uma aplicação cliente (browser) de cadastro de usuários que envia os da
 
 ## Requisitos Técnicos
 
+-   **Node:** 18.12.1
+
 ### Frontend
 
 -   **Framework:** VueJS 3 (via Composition API com `<script setup>` + Vite)
